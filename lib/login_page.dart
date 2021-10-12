@@ -24,7 +24,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Form(
-        key: _formkey ,
+         key: _formkey ,
         child: Center(
           child: SingleChildScrollView(
           padding: EdgeInsets.symmetric(horizontal: 16),
@@ -51,15 +51,15 @@ class _LoginPageState extends State<LoginPage> {
 
               TextFormField(
                 decoration: InputDecoration(
-                  labelText: 'senha'
+                  labelText: 'Senha'
                 ),
                 controller: _passwordController,
                 obscureText: true,
                 keyboardType: TextInputType.text,
-                validator: (senha){
-                  if(senha == null || senha.isEmpty){
+                validator: (password){
+                  if(password == null || password.isEmpty){
                     return 'Por favor, digite sua senha';
-                  }else if(senha.length < 3){
+                  }else if(password.length < 3){
                     return 'Por favor, digite uma senha maior que 6 caracteres';
                   }
                   return null;
@@ -109,7 +109,7 @@ class _LoginPageState extends State<LoginPage> {
     var resposta = await http.post(
     url,
     body: {
-      'name': _emailController.text,
+      'email': _emailController.text,
       'password': _passwordController.text
     },
     );
@@ -119,6 +119,7 @@ class _LoginPageState extends State<LoginPage> {
     }else{
       return false;
     }
+    
   }
 
 }
