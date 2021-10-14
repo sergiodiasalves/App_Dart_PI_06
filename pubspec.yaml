@@ -78,3 +78,9 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+
+  assets:
+    - assets/10181.png
+    - assets/76254.png
+    - assets/rm373batch10-110.png
+    - recycling-symbol.png

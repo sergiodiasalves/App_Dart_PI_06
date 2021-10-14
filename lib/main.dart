@@ -1,22 +1,23 @@
+import 'package:app/boasvindas_page.dart';
 import 'package:flutter/material.dart';
 
-import 'boasvindas_page.dart';
-
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
+  
   @override
   Widget build(BuildContext context) {
-      return MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Autenticação',
       theme: ThemeData(
-        primarySwatch: Colors.green,
+      primarySwatch: Colors.green,
       ),
       home: BoasVindasPage(),
     );
   }
 }
-
