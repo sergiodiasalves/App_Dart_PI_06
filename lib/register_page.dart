@@ -1,4 +1,9 @@
+import 'package:app/login_page.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
+
+
 
 class RegisterPage extends StatefulWidget {
   RegisterPage({Key? key}) : super(key: key);
@@ -7,14 +12,22 @@ class RegisterPage extends StatefulWidget {
   _RegisterPageState createState() => _RegisterPageState();
 }
 
+final _formkey = GlobalKey<FormState>();
+final _emailController = TextEditingController();
+final _nameController = TextEditingController();
+final _passwordController = TextEditingController();
+
 class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
+      body: Form(
+        key: _formkey,
+      child: Center(
+        child: Container(  
         padding: EdgeInsets.only(top: 10, left: 40, right: 40),
         color: Colors.white,
-        child: ListView(
+         child: ListView(
           children: <Widget>[
             Container(
               width: 200,
@@ -26,40 +39,17 @@ class _RegisterPageState extends State<RegisterPage> {
                   fit: BoxFit.fitHeight,
                   ),
               ) ,
-              child: Container(
-                height: 56,
-                width: 56,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    stops: [0.3, 1.0],
-                    colors: [
-                      Colors.green.shade800,
-                      Colors.green.shade200,
-                    ],
-                  ),
-                  border: Border.all(
-                    width: 4.0,
-                    color: const Color(0xFFFFFFFF),
-                  ),
-                  borderRadius: BorderRadius.all(Radius.circular(56),
-                  ),
-                ),
-                child: SizedBox.expand(
-                  child: FlatButton(
-                    child: Icon(
-                      Icons.add,
-                        color:Colors.white,
-                      ),
-                      onPressed: () {},
-                    ),
-                    ),
-                ),
-              ),
+            ),            
             SizedBox(
               height: 20,
+            ),
+            Text('Cadastro',
+            style: TextStyle(
+              fontSize: 32,
+              fontWeight: FontWeight.w500,
+              color: Colors.green.shade800,
+            ),
+            textAlign: TextAlign.center,
             ),
             TextFormField(
               keyboardType: TextInputType.text,
@@ -74,6 +64,15 @@ class _RegisterPageState extends State<RegisterPage> {
                style: TextStyle(
                  fontSize: 20,
                ),
+               controller: _nameController,
+                validator: (name){
+                  if (name == null || name.isEmpty) {
+                    return 'Por favor. digite seu nome';
+                  } else if (name.length < 4) {
+                    return 'Por favor, digite seu nome maior que 4 caracteres';
+                  }
+                  return null;
+                  },
             ),
             SizedBox(
               height: 10,
@@ -91,6 +90,17 @@ class _RegisterPageState extends State<RegisterPage> {
                style: TextStyle(
                  fontSize: 20,
                ),
+                controller: _emailController,
+                validator: (email){
+                  if(email == null || email.isEmpty){
+                    return 'Por Favor, digite seu e-mail';
+                  }else if (!RegExp(
+                            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                        .hasMatch(_emailController.text)) {
+                      return 'Por favor, digite um e-mail correto';
+                    }
+                    return null;
+                  },
             ),
             SizedBox(
               height: 10,
@@ -109,6 +119,15 @@ class _RegisterPageState extends State<RegisterPage> {
                style: TextStyle(
                  fontSize: 20,
                ),
+               controller: _passwordController,
+                validator: (senha){
+                  if (senha == null || senha.isEmpty) {
+                    return 'Por favor. digite sua senha';
+                  } else if (senha.length < 6) {
+                    return 'Por favor, digite uma senha maior que 6 caracteres';
+                  }
+                  return null;
+                  },
             ),
             SizedBox(
               height: 10,
@@ -131,7 +150,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                 ),
                 child: SizedBox.expand(
-                  child: FlatButton(
+                  child: TextButton(
                     child: Text(
                           'Cadastrar',
                           style: TextStyle(
@@ -141,7 +160,26 @@ class _RegisterPageState extends State<RegisterPage> {
                           ),
                           textAlign: TextAlign.center,
                         ),
-                        onPressed: () {},
+                         onPressed: () async {
+                            FocusScopeNode currentFocus = FocusScope.of(context);
+                            if(_formkey.currentState!.validate()){
+                              bool deuCerto = await newUser();
+                              if(!currentFocus.hasPrimaryFocus){
+                                currentFocus.unfocus();
+                              }
+                              if(deuCerto) {
+                                Navigator.pushReplacement(
+                                  context, 
+                                  MaterialPageRoute(
+                                    builder: (context) => LoginPage(), 
+                                  ),
+                                );
+                              }else{
+                                _passwordController.clear();
+                                ScaffoldMessenger.of(context) .showSnackBar(snackBar);
+                              }
+                            }
+                          },
                 ),
                 ),
               ),
@@ -151,17 +189,57 @@ class _RegisterPageState extends State<RegisterPage> {
             Container(
               height: 40,
               alignment: Alignment.center,
-              child: FlatButton(
+              child: TextButton(
                 child: Text(
                   'Voltar',
                   textAlign: TextAlign.center,
                   ),
-                  onPressed: () => Navigator.pop(context, false),
+                  onPressed: () async {
+                    bool exit1 = await sair1();
+                      if(exit1){
+                    Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (context) => LoginPage(),),
+                    );
+                    }
+                  }
               ),
             ),
           ],
           ),
       ),
+      ),
+      ),
     );
+
   }
+   final snackBar = SnackBar(
+    content: Text(
+    'email ou senha são inválidos',
+    textAlign: TextAlign.center,
+    ), 
+    backgroundColor: Colors.redAccent,
+     );
+
+Future<bool> sair1() async{
+  SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+  await sharedPreferences.clear();
+  return true;
+}
+
+Future<bool> newUser() async {
+  SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+  var url = Uri.parse('https://theguardianapi.vercel.app/users/');
+  var resposta = await http.post(
+    url,
+    body: {
+      'email': _emailController.text,
+      'name': _nameController.text,
+      'password': _passwordController.text,
+      },
+      
+  
+  );
+  return true;
+}
+
 }

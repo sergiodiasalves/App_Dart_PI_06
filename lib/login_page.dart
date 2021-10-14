@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:app/home_page.dart';
 import 'package:app/register_page.dart';
+import 'package:app/reset_password_page.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
@@ -93,11 +94,18 @@ class _LoginPageState extends State<LoginPage> {
               Container(
                 height: 40,
                 alignment: Alignment.centerRight,
-                child: FlatButton(
+                child: TextButton(
                   child: Text(
                   'Recuperar Senha',
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ResetPasswordPage(),
+                        ),
+                        );
+                  },
                 ),
                ),
                SizedBox(
@@ -121,7 +129,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
                 child: SizedBox.expand(
-                  child: FlatButton(
+                  child: TextButton(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: <Widget>[
@@ -171,7 +179,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
               Container(
                 height: 40,
-                child: FlatButton(child: Text(
+                child: TextButton(child: Text(
                   "Cadastre-se",
                   textAlign: TextAlign.center,
                   ),
