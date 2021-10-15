@@ -8,14 +8,13 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
-  
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Autenticação',
       theme: ThemeData(
-      primarySwatch: Colors.green,
+        primarySwatch: Colors.green,
       ),
       home: BoasVindasPage(),
     );

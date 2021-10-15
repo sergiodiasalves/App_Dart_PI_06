@@ -1,4 +1,3 @@
-
 import 'package:app/boasvindas_page.dart';
 import "package:flutter/material.dart";
 import 'package:shared_preferences/shared_preferences.dart';
@@ -18,28 +17,31 @@ class _HomePageState extends State<HomePage> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text('Home Page', 
-          textAlign: TextAlign.center,
+          Text(
+            'Home Page',
+            textAlign: TextAlign.center,
           ),
           TextButton(
-            onPressed: () async {
-              bool exit = await sair();
-              if(exit){
-                Navigator.pushReplacement(context, 
-                MaterialPageRoute(builder: (context) => BoasVindasPage(),),
-                );
-              }
-            }, child: Text('Sair'))
+              onPressed: () async {
+                bool exit = await sair();
+                if (exit) {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => BoasVindasPage(),
+                    ),
+                  );
+                }
+              },
+              child: Text('Sair'))
         ],
-      
       ),
     );
   }
 
-  Future<bool> sair() async{
+  Future<bool> sair() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     await sharedPreferences.clear();
     return true;
   }
-
 }

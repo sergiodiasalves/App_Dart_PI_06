@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ResetPasswordPage extends StatefulWidget {
-  const ResetPasswordPage({ Key? key }) : super(key: key);
+  const ResetPasswordPage({Key? key}) : super(key: key);
 
   @override
   _ResetPasswordPageState createState() => _ResetPasswordPageState();
@@ -11,11 +11,10 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:  AppBar(
-        title: Text('Voltar',
-        style: TextStyle(
-          color: Colors.green.shade800
-        ),
+      appBar: AppBar(
+        title: Text(
+          'Voltar',
+          style: TextStyle(color: Colors.green.shade800),
         ),
         backgroundColor: Colors.white,
         leading: IconButton(
@@ -26,7 +25,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
       ),
       body: Container(
         padding: EdgeInsets.only(
-          top: 60,
+          top: 10,
           left: 40,
           right: 40,
         ),
@@ -39,14 +38,15 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
               child: Image.asset("assets/iconfinder_lock.png"),
             ),
             SizedBox(
-              height: 20,
+              height: 15,
             ),
-            Text('Esqueceu su senha?',
-            style: TextStyle(
-              fontSize: 32,
-              fontWeight: FontWeight.w500,
-            ),
-            textAlign: TextAlign.center,
+            Text(
+              'Esqueceu sua senha?',
+              style: TextStyle(
+                fontSize: 32,
+                fontWeight: FontWeight.w500,
+              ),
+              textAlign: TextAlign.center,
             ),
             SizedBox(
               height: 10,
@@ -56,8 +56,8 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w400,
-                ),
-                textAlign: TextAlign.center,
+              ),
+              textAlign: TextAlign.center,
             ),
             SizedBox(
               height: 20,
@@ -71,52 +71,52 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                   fontWeight: FontWeight.w400,
                   fontSize: 20,
                 ),
-               ),
-               style: TextStyle(
-                 fontSize: 20,
-               ),
+              ),
+              style: TextStyle(
+                fontSize: 20,
+              ),
             ),
             SizedBox(
               height: 20,
             ),
-             Container(
-                height: 60,
-                alignment: Alignment.centerLeft,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    stops: [0.3, 1],
-                    colors: [
-                      Colors.green.shade800,
-                      Colors.green.shade200,
-                    ],
-                  ),
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(5),
-                  ),
+            Container(
+              height: 60,
+              alignment: Alignment.centerLeft,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  stops: [0.3, 1],
+                  colors: [
+                    Colors.green.shade800,
+                    Colors.green.shade200,
+                  ],
                 ),
-                child: SizedBox.expand(
-                  child: TextButton(
-                    child: Text(
-                          'Enviar',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                            fontSize: 20,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                        onPressed: () {},
-                ),
+                borderRadius: BorderRadius.all(
+                  Radius.circular(5),
                 ),
               ),
-               SizedBox(
+              child: SizedBox.expand(
+                child: TextButton(
+                  child: Text(
+                    'Enviar',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                      fontSize: 20,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  onPressed: () {},
+                ),
+              ),
+            ),
+            SizedBox(
               height: 20,
             ),
           ],
-          ),
+        ),
       ),
-     );
+    );
   }
 }
